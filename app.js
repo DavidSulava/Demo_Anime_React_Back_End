@@ -46,7 +46,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 const allowedOrigins = process.env.ALLOWED_DOMAINS.split(',')
 app.use( function(req, res, next)
   {
-    if ( allowedOrigins.indexOf(req.headers.origin) > -1 )
+
+    if ( allowedOrigins.indexOf(req.get('origin')) > -1 )
       {
         res.header("Access-Control-Allow-Origin",  req.headers.origin ); // update to match the domain you will make the request from
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, Range");
