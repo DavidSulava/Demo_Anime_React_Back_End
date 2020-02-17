@@ -37,7 +37,7 @@ app.use(session({
                   store : sessionStore,
                   resave: true,
                   saveUninitialized: false,
-                  cookie: { maxAge: 3600000, secure: false, httpOnly: true, SameSite: 'none' }
+                  cookie: { maxAge: 3600000, secure: false, httpOnly: false, SameSite: 'none' }
 
                 }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -46,7 +46,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 const allowedOrigins = process.env.ALLOWED_DOMAINS.split(',')
 app.use( function(req, res, next)
   {
-    console.log(req.get('origin'));
+
     if ( allowedOrigins.indexOf(req.get('origin')) > -1 )
       {
         res.header("Access-Control-Allow-Origin",  req.headers.origin ); // update to match the domain you will make the request from
