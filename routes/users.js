@@ -90,8 +90,8 @@ var sendEmail = async function ( From, ToEmail, subject, html )
     let transporter = nodemailer.createTransport(
       {
         host: "smtp.gmail.com",
-        port: 587,
-        secure: false, // true for 465, false for other ports
+        port: 465, // 587, 465
+        secure: true, // true for 465, false for other ports
         auth: {
           user: process.env.CONTACT_EMAIL,
           pass: process.env.CONTACT_EMAIL_PASSWORD,
