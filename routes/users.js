@@ -597,8 +597,9 @@ router.post( '/contact/email',  async function( req, res, next )
 
     var email  = req.fields.email     ? req.fields.email : '';
     var msg    = req.fields.msg       ? req.fields.msg   : '';
-    var hostName =  req.get('x-forwarded-host');
-    var html  = `<p>${msg}</p>`
+    var hostName =  req.get('origin');
+    var html  = `<p>${msg}</p>`;
+
 
     if ( email && msg )
       {
