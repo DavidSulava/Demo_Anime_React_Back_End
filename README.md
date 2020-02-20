@@ -11,5 +11,3 @@ Back-end( data server ) для аниме сайта.
 Express
 Mongodb Atlas, Mongoose
 ```
-
-
