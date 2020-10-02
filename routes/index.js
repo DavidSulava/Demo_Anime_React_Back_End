@@ -3,12 +3,7 @@ var router   = express.Router();
 var mongoose = require('mongoose');
 require('dotenv').config();
 
-const Anime_scm=require('../backend/models/anime.model');
-
-
-const atlas         =  process.env.MONGO_ATLAS_STR;
-const bd_update_src =  process.env.DB_UPDATE_SOURCE;
-
+const Anime_scm = require('../DB/models/anime.model');
 
 /* GET home page. */
 router.get('/media',  function(req, res, ){
@@ -140,8 +135,9 @@ router.get('/findAll', function(req, res, ){
 
 //*Update Database
 router.get('/update_db', async function(req, res){
+
   const fetch  = require('node-fetch');
-  let response = await fetch( bd_update_src );
+  let response = await fetch( process.env.DB_UPDATE_SOURCE );
 
   if (!response.ok)
     res.send('no data');
@@ -149,7 +145,8 @@ router.get('/update_db', async function(req, res){
   var data = await response.json();
 
 
-  mongoose.connect( atlas, {useNewUrlParser: true, useUnifiedTopology: true});
+  mongoose.connect( process.env.MONGO_ATLAS_STR, {useNewUrlParser: true, useUnifiedTopology: true})
+
   var db = mongoose.connection;
 
   db.on('error', console.error.bind(console, 'connection error:'));
