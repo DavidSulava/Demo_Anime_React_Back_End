@@ -46,26 +46,27 @@ var recapCHA = async function ( respose_str ){
 };
 
 var userSessionHandle = ( req, res, user )=>{
-    if ( !req.session[ 'user' ] ){
-      req.session[ 'user' ] = {
-        _id        : user._id       ,
-        name       : user.name      ,
-        email      : user.email     ,
-        img        : user.img       ,
-        firstName  : user.firstName ,
-        lastName   : user.lastName  ,
-        phone      : user.phone     ,
-        isVerified : user.isVerified,
-      };
+  if ( !req.session[ 'user' ] ){
+    req.session[ 'user' ] = {
+      _id        : user._id       ,
+      name       : user.name      ,
+      email      : user.email     ,
+      img        : user.img       ,
+      firstName  : user.firstName ,
+      lastName   : user.lastName  ,
+      phone      : user.phone     ,
+      isVerified : user.isVerified,
+    };
 
-    }
-    else{
-        res.clearCookie('t_user')
-    }
+  }
+  else{
+      res.clearCookie('t_user')
+  }
 
 }
+
 var userObject = ( data )=> {
-  var userPrepared = {
+  return {
     name       : data.name     ,
     email      : data.email    ,
     firstName  : data.firstName,
@@ -74,7 +75,6 @@ var userObject = ( data )=> {
     img        : data.img      ,
     isVerified : data.isVerified
   };
-  return userPrepared
 }
 
 var sendEmail = async function ( From, ToEmail, subject, html ) {
