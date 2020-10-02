@@ -1,8 +1,10 @@
+
 var createError   = require('http-errors');
 var express       = require('express');
 var path          = require('path');
 var logger        = require('morgan');
 var hpp           = require('hpp');
+
 var contentLength = require('express-content-length-validator');
 const formidable  = require('express-formidable');
 
@@ -22,6 +24,8 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(hpp());
+
+app.use(cookieParser(process.env.COOKY_SECRET));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -57,7 +61,6 @@ db_con.on('error', console.error.bind(console, 'connection error:'));
 var indexRouter = require('./routes/index');
 
 app.use('/', indexRouter);
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
