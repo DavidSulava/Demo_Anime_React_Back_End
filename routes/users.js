@@ -72,25 +72,25 @@ var userObject = ( data )=>{
 
 var sendEmail = async function ( From, ToEmail, subject, html ){
 
-    // create reusable transporter object using the default SMTP transport
-    let transporter = nodemailer.createTransport({
-      host   : "smtp.gmail.com",
-      port   : 465             , // 587, 465
-      secure : true            , // true for 465, false for other ports
-      auth   : {
-        user : process.env.CONTACT_EMAIL         ,
-        pass : process.env.CONTACT_EMAIL_PASSWORD,
-      }
-    });
+  // create reusable transporter object using the default SMTP transport
+  let transporter = nodemailer.createTransport({
+    host   : "smtp.gmail.com",
+    port   : 465             , // 587, 465
+    secure : true            , // true for 465, false for other ports
+    auth   : {
+      user : process.env.CONTACT_EMAIL         ,
+      pass : process.env.CONTACT_EMAIL_PASSWORD,
+    }
+  });
 
-    // send mail with defined transport object
-    await transporter.sendMail({
-      from   : `${From} <webproto3@gmail.com>`, // sender address
-      to     : ToEmail                        , // list of receivers
-      subject: subject                        , // Subject line
-      html   : html                             // html body
+  // send mail with defined transport object
+  await transporter.sendMail({
+    from   : `${From} <webproto3@gmail.com>`, // sender address
+    to     : ToEmail                        , // list of receivers
+    subject: subject                        , // Subject line
+    html   : html                             // html body
 
-    });
+  });
 
 }
 
