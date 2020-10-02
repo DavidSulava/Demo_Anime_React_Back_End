@@ -524,10 +524,6 @@ router.post( '/email/confirmation',  async function( req, res, next ){
     });
   }
 
-
-
-
- 
 });
 
 // Contact Email
