@@ -114,7 +114,7 @@ router.get('/find/:id', function(req, res, ){
   let id =  req.params.id;
 
   if ( id ){
-    Anime_scm.findById( id , 'title year trailer start_year time status rating media_type imgU2 img genre episodes director description country',
+    Anime_scm.findById( id , 'title year trailer start_year time status rating media_type imgU2 img genre episodes director description country frame',
     (err, docs) => { res.status(200).json( docs )} );
   }
 });
