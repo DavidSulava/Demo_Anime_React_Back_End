@@ -15,10 +15,10 @@ const recapCHA = async function ( respose_str ){
 
     var response = await fetch( url, {  method: 'GET' } );
 
-    if ( response.status == 200 )
-        return response.json();
-    else
-        return false
+    if ( response.status != 200 )
+        return { success: false }
+
+    return response.json();
 };
 
 const userSessionHandle = ( req, res, user )=>{

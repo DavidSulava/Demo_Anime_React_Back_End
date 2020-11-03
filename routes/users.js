@@ -61,8 +61,8 @@ router.get( '/logOut',  async function( req, res ){
 /* Register User*/
 router.post( '/register',  async function( req, res, next ){
 
-  var recaptcha    = req.fields['g-recaptcha-response'] ? req.fields['g-recaptcha-response'] : '';
-  var captcha       = await recapCHA( recaptcha );
+  var recaptcha = req.fields['g-recaptcha-response'] ? req.fields['g-recaptcha-response'] : '';
+  var captcha   = await recapCHA( recaptcha );
 
   if ( !captcha.success )
     return res.status(401).json( {  msg: {'erCaptcha': 'Check the box below  if you are not a robot'} } );
