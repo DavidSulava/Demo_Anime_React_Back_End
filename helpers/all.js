@@ -65,7 +65,6 @@ const sendEmail = async function ( From, ToEmail, subject, html ){
             clientId     : process.env.CONTACT_CLIENT_ID,
             clientSecret : process.env.CONTACT_SECRET,
             refreshToken : process.env.CONTACT_REFRESH_TOK,
-
         }
     });
 
