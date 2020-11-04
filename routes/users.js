@@ -170,104 +170,108 @@ router.post( '/login', async function( req, res ){
 /* Update User*/
 router.post( '/updateUser', async function( req, res ){
 
-  if( req.session[ 'user' ] ){
+  if( !req.session[ 'user' ] )
+    return res.status(400).send( { msg: { message: badCredentials_m } } );
 
-    var userName        = req.fields.name        ? req.fields.name        : '';
-    var userEmail       = req.fields.email       ? req.fields.email       : '';
-    var firstName       = req.fields.firstName   ? req.fields.firstName   : '';
-    var lastName        = req.fields.lastName    ? req.fields.lastName    : '';
-    var phone           = req.fields.phone       ? req.fields.phone       : '';
-
-
-    let validateMessage = userValidator( userName, userEmail  );
-    if ( validateMessage )
-      return res.status(401).send( {msg: validateMessage} );
+  var userName        = req.fields.name        ? req.fields.name        : '';
+  var userEmail       = req.fields.email       ? req.fields.email       : '';
+  var firstName       = req.fields.firstName   ? req.fields.firstName   : '';
+  var lastName        = req.fields.lastName    ? req.fields.lastName    : '';
+  var phone           = req.fields.phone       ? req.fields.phone       : '';
 
 
-    var id = req.session[ 'user' ]._id
-
-    var check = await User_scm.findById( id ).catch( error => serverError( error, res,  'updating the user' ) );
-
-    if ( !check )
-      return res.status(400).send( { msg: { message: badCredentials_m } } );
-
-    // -----------[ Check and Update Email ]--------------
-    if ( userEmail && userEmail != check.email){
-        let checkEmail =  User_scm.find( { email: userEmail } )
-
-        if( checkEmail )
-          return res.status(401).send( { msg: { emailErr: 'A user with such email already exists!' } } );
-
-        check.email      = userEmail;
-        check.isVerified = false;
-    }
+  let validateMessage = userValidator( userName, userEmail  );
+  if ( validateMessage )
+    return res.status(401).send( {msg: validateMessage} );
 
 
-    if( userName )
-      check.name = userName
-    if( firstName )
-      check.firstName = firstName
-    if( lastName )
-      check.lastName = lastName
-    if( phone )
-      check.phone = phone
+  var id = req.session[ 'user' ]._id
 
-    let dataSaved =   await check.save();
-    if( dataSaved ){
-      var updatedUser = {
-        name       : check.name               ,
-        email      : check.email              ,
-        firstName  : check.firstName          ,
-        img        : req.session[ 'user' ].img,
-        lastName   : check.lastName           ,
-        phone      : check.phone              ,
-        isVerified :check.isVerified
-      };
-      // -----------[ Update Session Data ]--------------
-      req.session[ 'user' ] = { ...req.session[ 'user' ], ...updatedUser}
+  var check = await User_scm.findById( id ).catch( error => serverError( error, res,  'updating the user' ) );
 
-      return res.status(200).send( { msg:{ userUpdated: userUpdated },  user: updatedUser  } );
-    }
+  if ( !check )
+    return res.status(400).send( { msg: { message: badCredentials_m } } );
 
+  // -----------[ Check and Update Email ]--------------
+  if ( userEmail && userEmail != check.email){
+      let checkEmail =  User_scm.find( { email: userEmail } )
+
+      if( checkEmail )
+        return res.status(401).send( { msg: { emailErr: 'A user with such email already exists!' } } );
+
+      check.email      = userEmail;
+      check.isVerified = false;
   }
 
- });
+  if( userName )
+    check.name = userName
+  if( firstName )
+    check.firstName = firstName
+  if( lastName )
+    check.lastName = lastName
+  if( phone )
+    check.phone = phone
+
+  let dataSaved =   await check.save();
+  if(!dataSaved)
+    return res.status(500).send( { msg: { message: 'the data does not saved' } } );
+
+  var updatedUser = {
+    name       : check.name               ,
+    email      : check.email              ,
+    firstName  : check.firstName          ,
+    img        : req.session[ 'user' ].img,
+    lastName   : check.lastName           ,
+    phone      : check.phone              ,
+    isVerified :check.isVerified
+  };
+  // -----------[ Update Session Data ]--------------
+  req.session[ 'user' ] = { ...req.session[ 'user' ], ...updatedUser}
+
+  return res.status(200).send( { msg:{ userUpdated: userUpdated },  user: updatedUser  } );
+
+});
 
 /* [ Change a User Image ]*/
 router.post( '/updateImg', async function( req, res ){
 
-  if( req.session[ 'user' ] ){
-    var userIMG  = req.fields.img ? req.fields.img : '';
+  if( !req.session[ 'user' ] )
+    return res.status(400).send( { msg: { message: badCredentials_m } } );
 
-    if(userIMG){
-        var id = req.session[ 'user' ]._id
 
-        var check = await User_scm.findById( id ).catch( error => serverError( error, res,  'updating the user' ) );
+  var userIMG  = req.fields.img ? req.fields.img : '';
 
-        if ( !check )
-          return res.status(400).send( { msg: { message: badCredentials_m } } );
+  if(!userIMG)
+    return res.status(500).send( { msg: { message: 'the data does not saved' } } );
 
-        check.img     = userIMG
-        let dataSaved =   await check.save();
 
-        if( dataSaved ){
+  var id = req.session[ 'user' ]._id
 
-          var updatedUser = {
-            name       : check.name     ,
-            email      : check.email    ,
-            img        : check.img      ,
-            firstName  : check.firstName,
-            lastName   : check.lastName ,
-            phone      : check.phone    ,
-            isVerified :check.isVerified
-          };
-          // -----------[ Update Session Data ]--------------
-          req.session[ 'user' ] = { ...req.session[ 'user' ], ...updatedUser}
+  var check = await User_scm.findById( id ).catch( error => serverError( error, res,  'updating the user' ) );
 
-          return res.status(200).send( { msg:{ imgChanged: 'Avatar selected' },  user: updatedUser  } );
-        }
-    }
-  }
+  if ( !check )
+    return res.status(400).send( { msg: { message: badCredentials_m } } );
+
+  check.img     = userIMG
+  let dataSaved =   await check.save();
+
+  if(!dataSaved)
+    return res.status(500).send( { msg: { message: 'the data does not saved' } } );
+
+  var updatedUser = {
+    name       : check.name     ,
+    email      : check.email    ,
+    img        : check.img      ,
+    firstName  : check.firstName,
+    lastName   : check.lastName ,
+    phone      : check.phone    ,
+    isVerified :check.isVerified
+  };
+  // -----------[ Update Session Data ]--------------
+  req.session[ 'user' ] = { ...req.session[ 'user' ], ...updatedUser}
+
+  return res.status(200).send( { msg:{ imgChanged: 'Avatar selected' },  user: updatedUser  } );
+
 });
 /* [ Change the Password ]*/
 router.post( '/newPassword', async function( req, res ){

@@ -26,14 +26,14 @@ const userSessionHandle = ( req, res, user )=>{
     if ( !req.session[ 'user' ] ){
 
         req.session[ 'user' ] = {
-        _id        : user._id       ,
-        name       : user.name      ,
-        email      : user.email     ,
-        img        : user.img       ,
-        firstName  : user.firstName ,
-        lastName   : user.lastName  ,
-        phone      : user.phone     ,
-        isVerified : user.isVerified,
+            _id        : user._id       ,
+            name       : user.name      ,
+            email      : user.email     ,
+            img        : user.img       ,
+            firstName  : user.firstName ,
+            lastName   : user.lastName  ,
+            phone      : user.phone     ,
+            isVerified : user.isVerified,
         };
     }
     else
@@ -66,11 +66,20 @@ const sendEmail = async function ( From, ToEmail, subject, html ){
     });
 
     // send mail with defined transport object
-    await transporter.sendMail({
+    const mailOptions  = {
         from   : `${From} <webproto3@gmail.com>`, // sender address
         to     : ToEmail                        , // list of receivers
         subject: subject                        , // Subject line
         html   : html                             // html body
+
+    }
+    await transporter.sendMail( mailOptions, function(error, info){
+
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
 
     });
 
