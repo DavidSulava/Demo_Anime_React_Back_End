@@ -60,8 +60,12 @@ const sendEmail = async function ( From, ToEmail, subject, html ){
         port   : 465             , // 587, 465
         secure : true            , // true for 465, false for other ports
         auth   : {
-            user : process.env.CONTACT_EMAIL         ,
-            pass : process.env.CONTACT_EMAIL_PASSWORD,
+            type         : 'OAuth2',
+            user         : process.env.CONTACT_EMAIL,
+            clientId     : process.env.CONTACT_CLIENT_ID,
+            clientSecret : process.env.CONTACT_SECRET,
+            refreshToken : process.env.CONTACT_REFRESH_TOK,
+
         }
     });
 
