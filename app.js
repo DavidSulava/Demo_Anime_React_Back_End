@@ -37,7 +37,7 @@ app.use( function(req, res, next){
 
   if ( allowedOrigins.indexOf(req.get('origin')) > -1 ){
     res.header("Access-Control-Allow-Origin",  req.headers.origin ); // update to match the domain you will make the request from
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, Range");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, Range, Set-Cookie");
   }
 
   // res.header('Access-Control-Expose-Headers', 'Content-Length');
@@ -58,7 +58,12 @@ app.use(session({
   store             : sessionStore                  ,
   resave            : true                          ,
   saveUninitialized : false                         ,
-  cookie            : { maxAge: 3600000, secure: true, httpOnly: true, sameSite: 'none' }
+  cookie: {
+    // httpOnly: true ,
+    maxAge  : 3600000 ,
+    secure  : false   ,
+    sameSite: 'Lax'   ,
+  }
 
 }));
 

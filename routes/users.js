@@ -33,15 +33,7 @@ router.get( '/checkUser',  async function( req, res,  ){
   let user = req.session[ 'user' ];
 
   return res.status(200).send( {
-    user: {
-      name       : user.name     ,
-      email      : user.email    ,
-      firstName  : user.firstName,
-      lastName   : user.lastName ,
-      img        : user.img      ,
-      phone      : user.phone    ,
-      isVerified :user.isVerified
-    }
+    user: { ...userObject( user ) }
   } );
 });
 
@@ -125,7 +117,7 @@ router.post( '/register',  async function( req, res, next ){
   // --------- [ return Response] ---------------
   return res.status(200).json( {
     msg  : { regSuccess: user.email + registered },
-    user :  userObject( user )
+    user : userObject( user )
   });
 
 } );
@@ -153,15 +145,7 @@ router.post( '/login', async function( req, res ){
 
     return res.status(200).send( {
       msg  :{ loginSuccess: success},
-      user :{
-        name       : check.name     ,
-        email      : check.email    ,
-        img        :check.img       ,
-        firstName  : check.firstName,
-        lastName   : check.lastName ,
-        phone      : check.phone    ,
-        isVerified : check.isVerified
-      }
+      user :{ ...userObject(check) }
     } );
 
   })
@@ -217,13 +201,8 @@ router.post( '/updateUser', async function( req, res ){
     return res.status(500).send( { msg: { message: 'the data does not saved' } } );
 
   var updatedUser = {
-    name       : check.name               ,
-    email      : check.email              ,
-    firstName  : check.firstName          ,
-    img        : req.session[ 'user' ].img,
-    lastName   : check.lastName           ,
-    phone      : check.phone              ,
-    isVerified :check.isVerified
+    ...userObject(check),
+    img : req.session[ 'user' ].img,
   };
   // -----------[ Update Session Data ]--------------
   req.session[ 'user' ] = { ...req.session[ 'user' ], ...updatedUser}
@@ -258,15 +237,8 @@ router.post( '/updateImg', async function( req, res ){
   if(!dataSaved)
     return res.status(500).send( { msg: { message: 'the data does not saved' } } );
 
-  var updatedUser = {
-    name       : check.name     ,
-    email      : check.email    ,
-    img        : check.img      ,
-    firstName  : check.firstName,
-    lastName   : check.lastName ,
-    phone      : check.phone    ,
-    isVerified :check.isVerified
-  };
+  var updatedUser = { ...userObject(check) };
+
   // -----------[ Update Session Data ]--------------
   req.session[ 'user' ] = { ...req.session[ 'user' ], ...updatedUser}
 
@@ -399,13 +371,8 @@ router.post( '/email/sendVerification', async function( req, res ){
         await sendEmail( hostName, userEmail, 'email confirmation', html ).catch(console.error);
 
         var updatedUser = {
-          name       : check.name               ,
-          email      : check.email              ,
-          firstName  : check.firstName          ,
-          img        : req.session[ 'user' ].img,
-          lastName   : check.lastName           ,
-          phone      : check.phone              ,
-          isVerified :check.isVerified
+          ...userObject( check ),
+          img : req.session[ 'user' ].img,
         };
         // -----------[ Update Session Data ]--------------
         req.session[ 'user' ] = { ...req.session[ 'user' ], ...updatedUser}
