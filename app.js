@@ -1,7 +1,6 @@
 var createError   = require('http-errors');
 var express       = require('express');
 var path          = require('path');
-var cookieParser  = require('cookie-parser');
 var session       = require('express-session');
 var FileStore     = require('session-file-store')(session);
 var logger        = require('morgan');
@@ -28,7 +27,6 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(hpp());
-// app.use(cookieParser(process.env.COOKY_SECRET));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -59,7 +57,7 @@ app.use(session({
   store             : sessionStore                  ,
   resave            : true                          ,
   saveUninitialized : false                         ,
-  cookie            : { maxAge: 3600000, secure: true, httpOnly: true, sameSite: 'None' }
+  cookie            : { maxAge: 3600000, secure: true, httpOnly: true, sameSite: 'none' }
 
 }));
 
