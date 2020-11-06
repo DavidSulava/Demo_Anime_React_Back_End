@@ -28,7 +28,7 @@ const {
 router.get( '/checkUser',  async function( req, res,  ){
 
   if ( !req.session[ 'user' ] )
-    return  res.status(401).send({ user: null, test: { ...req['session']['cookie'] }, })
+    return  res.status(401).send({ user: null })
 
   let user = req.session[ 'user' ];
 

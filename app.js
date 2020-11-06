@@ -31,7 +31,8 @@ app.use(hpp());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Enable CORS
-const allowedOrigins = process.env.ALLOWED_DOMAINS.split(',')
+const allowedOrigins = process.env.ALLOWED_DOMAINS.split(',').map( e=> e.trim() );
+
 app.use( function(req, res, next){
 
   if ( allowedOrigins.indexOf(req.get('origin')) > -1 ){
