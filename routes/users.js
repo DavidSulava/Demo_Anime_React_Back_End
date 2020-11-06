@@ -30,17 +30,17 @@ router.get( '/checkUser',  async function( req, res,  ){
   if ( !req.session[ 'user' ] )
     return  res.status(401).send({ user: null })
 
-  var user = req.session[ 'user' ];
+  let user = req.session[ 'user' ];
 
   return res.status(200).send( {
     user: {
-      name     : user.name     ,
-      email    : user.email    ,
-      firstName: user.firstName,
-      lastName : user.lastName ,
-      img      : user.img      ,
-      phone    : user.phone    ,
-      isVerified:user.isVerified
+      name       : user.name     ,
+      email      : user.email    ,
+      firstName  : user.firstName,
+      lastName   : user.lastName ,
+      img        : user.img      ,
+      phone      : user.phone    ,
+      isVerified :user.isVerified
     }
   } );
 });

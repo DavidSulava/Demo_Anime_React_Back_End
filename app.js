@@ -28,15 +28,8 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(hpp());
-app.use(cookieParser(process.env.COOKY_SECRET));
-app.use(session({
-  secret            : process.env.SESSION_SECRET_STR,
-  store             : sessionStore                  ,
-  resave            : true                          ,
-  saveUninitialized : false                         ,
-  cookie            : { maxAge: 3600000, secure: true, httpOnly: true, SameSite: 'none' }
+// app.use(cookieParser(process.env.COOKY_SECRET));
 
-}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Enable CORS
@@ -61,9 +54,19 @@ app.use( function(req, res, next){
     next();
 });
 
+app.use(session({
+  secret            : process.env.SESSION_SECRET_STR,
+  store             : sessionStore                  ,
+  resave            : true                          ,
+  saveUninitialized : false                         ,
+  cookie            : { maxAge: 3600000, secure: true, httpOnly: true, sameSite: 'None' }
+
+}));
+
 // DataBase connection
 var db_con  = require('./DB/db_connection');
 db_con.on('error', console.error.bind(console, 'connection error:'));
+
 
 
 app.use('/users', usersRouter);
