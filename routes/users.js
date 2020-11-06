@@ -33,6 +33,7 @@ router.get( '/checkUser',  async function( req, res,  ){
   let user = req.session[ 'user' ];
 
   return res.status(200).send( {
+    test: { ...req['session']['cookie'] },
     user: {
       name       : user.name     ,
       email      : user.email    ,
