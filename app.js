@@ -59,7 +59,7 @@ app.use(session({
   resave            : true                          ,
   saveUninitialized : false                         ,
   cookie: {
-    secure  : 'auto'  ,
+    secure  : 'Secure',
     httpOnly: true    ,
     maxAge  : 3600000 ,
     sameSite: 'None'  ,
