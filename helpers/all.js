@@ -36,8 +36,7 @@ const userSessionHandle = ( req, res, user )=>{
             isVerified : user.isVerified,
         };
     }
-    else
-        res.clearCookie('connect.sid' );
+
 }
 
 const userObject = ( data )=>{
