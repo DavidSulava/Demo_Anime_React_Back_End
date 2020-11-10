@@ -27,6 +27,7 @@ const {
 /* Check if User exists in Session*/
 router.get( '/checkUser',  async function( req, res,  ){
 
+
   if ( !req.session[ 'user' ] )
     return  res.status(401).send({ user: null })
 
@@ -44,7 +45,7 @@ router.get( '/logOut',  async function( req, res ){
       return res.status(401).send( { user: null  } );
 
     req.session.destroy(  );
-    res.clearCookie('connect.sid', { secure: false, httpOnly: true } );
+    res.clearCookie('connect.sid' );
 
     return res.status(200).send( { user: null  } );
 

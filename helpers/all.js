@@ -37,7 +37,7 @@ const userSessionHandle = ( req, res, user )=>{
         };
     }
     else
-        res.clearCookie('t_user')
+        res.clearCookie('connect.sid' );
 }
 
 const userObject = ( data )=>{
