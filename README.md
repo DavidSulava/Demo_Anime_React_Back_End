@@ -1,11 +1,13 @@
 
 ## Описание
-Back-end для [аниме сайта](https://github.com/DavidSulava/Demo_Anime_React_Front_End)
+Back-end( data server ) для аниме сайта.
 
-Демка API 👉 [тут](https://anime-server12.herokuapp.com/media) ( надо подождать пока выйдет из "idling state" ).
+Клиент 👉 [тут](https://github.com/DavidSulava/Demo_Anime_React_Front_End)
+Логин сервер 👉 [тут](https://github.com/DavidSulava/LoginServer)
+Демка 👉 [тут](https://anime-server12.herokuapp.com/media) ( надо подождать пока выйдет из "idling state" ).
 
-## Stack
+#### Используемые технологии:
 ```
-Express( express-session, session-file-store )
-Mongodb Atlas
+Express
+Mongodb Atlas, Mongoose
 ```

@@ -1,18 +1,13 @@
 var createError   = require('http-errors');
 var express       = require('express');
 var path          = require('path');
-var session       = require('express-session');
-var FileStore     = require('session-file-store')(session);
 var logger        = require('morgan');
 var hpp           = require('hpp');
 var contentLength = require('express-content-length-validator');
+const formidable  = require('express-formidable');
 
+require('dotenv').config();
 
-var indexRouter  = require('./routes/index');
-var usersRouter  = require('./routes/users');
-const formidable = require('express-formidable');
-
-let sessionStore = new FileStore({})
 
 var app = express();
 app.use(contentLength.validateMax({max: 9999, status: 400, message: "stop it!"}));
@@ -53,29 +48,15 @@ app.use( function(req, res, next){
     next();
 });
 
-app.use(session({
-  secret            : process.env.SESSION_SECRET_STR,
-  store             : sessionStore                  ,
-  resave            : true                          ,
-  saveUninitialized : false                         ,
-  cookie: {
-    secure  : 'Secure',
-    httpOnly: true    ,
-    maxAge  : 3600000 ,
-    sameSite: 'None'  ,
-  }
 
-}));
 
 // DataBase connection
 var db_con  = require('./DB/db_connection');
 db_con.on('error', console.error.bind(console, 'connection error:'));
 
+var indexRouter = require('./routes/index');
 
-
-app.use('/users', usersRouter);
-app.use('/'     , indexRouter);
-
+app.use('/', indexRouter);
 
 
 // catch 404 and forward to error handler
