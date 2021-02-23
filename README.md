@@ -8,6 +8,7 @@ Back-end( data server ) для аниме сайта.
 
 #### Используемые технологии:
 ```
-Express
-Mongodb Atlas, Mongoose
+Express,
+Mongodb Atlas,
+Mongoose
 ```
