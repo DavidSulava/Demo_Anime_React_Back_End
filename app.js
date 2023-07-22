@@ -27,7 +27,7 @@ app.use(hpp());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Enable CORS
-const allowedOrigins = process.env.ALLOWED_DOMAINS.split(',').map( e=> e.trim() );
+const allowedOrigins = process.env.ALLOWED_DOMAINS?.split(',')?.map( e=> e.trim() );
 
 app.use( function(req, res, next){
 
