@@ -1,12 +1,12 @@
 
-## Описание
-Back-end( data server ) для аниме сайта.
+## Description
+Back-end (data server) for an anime website.
 
-- Клиент 👉 [тут](https://github.com/DavidSulava/Demo_Anime_React_Front_End)
-- Логин сервер 👉 [тут](https://github.com/DavidSulava/LoginServer)
-- Демка 👉 [тут](https://davidsulava.github.io/Demo_Anime_React_Front_End/) ( надо подождать пока выйдет из "idling state" ).
+- Client 👉 [here](https://github.com/DavidSulava/Demo_Anime_React_Front_End)
+- Login server  👉 [here](https://github.com/DavidSulava/LoginServer)
+- Demo 👉 [here](https://davidsulava.github.io/Demo_Anime_React_Front_End/) ( please wait until it exits "idling state" ).
 
-#### Используемые технологии:
+#### Used libraries:
 ```
 Express,
 Mongodb Atlas,
